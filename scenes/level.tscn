@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://source/misc/level.gd" type="Script" id=2]
+[ext_resource path="res://scenes/crosshair.tscn" type="PackedScene" id=3]
+
+[node name="Level" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 2048, 1200 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="crosshair" parent="HUD" instance=ExtResource( 3 )]
+position = Vector2( 0, -18 )
+
+[node name="basicenemytimer" type="Timer" parent="."]
+autostart = true
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 508, 281 )
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+scale = Vector2( 2, 2 )
+current = true
+zoom = Vector2( 2, 2 )
+
+[connection signal="timeout" from="basicenemytimer" to="." method="_on_enemytimer_timeout"]
